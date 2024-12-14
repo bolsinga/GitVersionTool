@@ -6,5 +6,8 @@ let package = Package(
     name: "Example",
     platforms: [ .macOS(.v15) ],
     products: [ .library(name: "Example", targets: ["Example"]) ],
-    targets: [ .target( name: "Example") ]
+    targets: [
+      .target( name: "Example"),
+      .testTarget(name: "ExampleTests", dependencies: ["Example"]),
+]
 )
