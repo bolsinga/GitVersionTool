@@ -9,7 +9,13 @@ import Foundation
 import GitLibrary
 
 extension Git {
-  var report: Report {
-    Report()
+  func report() async -> Report {
+    do {
+      try await status()
+    } catch {
+      return Report(localChanges: true)
+    }
+
+    return Report(localChanges: false)
   }
 }
