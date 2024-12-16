@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct Report: CustomStringConvertible {
-  public var description: String {
+struct Report: CustomStringConvertible {
+  var description: String {
     "version"
   }
 }
