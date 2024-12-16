@@ -16,6 +16,9 @@ extension Git {
       return Report(localChanges: true)
     }
 
-    return Report(localChanges: false)
+    guard let tag = try? await describeTag() else {
+      return Report(localChanges: false)
+    }
+    return Report(localChanges: false, tag: tag)
   }
 }

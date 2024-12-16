@@ -9,9 +9,17 @@ import Foundation
 
 struct Report: CustomStringConvertible {
   let localChanges: Bool
+  let tag: String?
+
+  init(localChanges: Bool, tag: String? = nil) {
+    self.localChanges = localChanges
+    self.tag = tag
+  }
 
   var description: String {
-    if localChanges { return "local" }
-    return "version"
+    guard let tag else {
+      return localChanges ? "local" : "version"
+    }
+    return localChanges ? "\(tag)-local" : tag
   }
 }
