@@ -7,43 +7,44 @@
 
 import Foundation
 
-struct Report: CustomStringConvertible {
-  enum State: CustomStringConvertible {
-    case notGitDirectory
-    case localChanges
-    case noChanges
+enum GitDirectoryState {
+  case notGitDirectory
+  case localChanges
+  case noChanges
+}
 
-    var description: String {
-      switch self {
-      case .notGitDirectory:
-        "unknown"
-      case .localChanges:
-        "local"
-      case .noChanges:
-        "version"
-      }
-    }
-  }
-
-  let state: State
-  let tag: String?
-
-  init(state: State, tag: String? = nil) {
-    self.state = state
-    self.tag = tag
-  }
-
-  var description: String {
-    guard let tag else {
-      return state.description
-    }
+enum Report: CustomStringConvertible {
+  init(state: GitDirectoryState, name: String?) {
     switch state {
     case .notGitDirectory:
-      return state.description
+      self = .notGit
     case .localChanges:
-      return "\(tag)-\(state)"
+      self = .localChanges(name)
     case .noChanges:
-      return tag
+      self = .noChanges(name)
     }
+  }
+
+  case notGit
+  case localChanges(String?)
+  case noChanges(String?)
+
+  var description: String {
+    switch self {
+    case .notGit:
+      return "unknown"
+    case .localChanges(let name):
+      guard let name else { return "local" }
+      return "\(name)-local"
+    case .noChanges(let name):
+      guard let name else { return "version" }
+      return name
+    }
+  }
+}
+
+extension Report {
+  init(state: GitDirectoryState, tag: String? = nil) {
+    self.init(state: state, name: tag)
   }
 }

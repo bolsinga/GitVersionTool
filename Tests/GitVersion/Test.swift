@@ -17,7 +17,7 @@ struct Test {
     #expect("\(Report(state: .noChanges))" == "version")
   }
 
-  @Test func localChanges_tag() throws {
+  @Test func state_tag() throws {
     #expect("\(Report(state: .notGitDirectory, tag: "tag"))" == "unknown")
     #expect("\(Report(state: .localChanges, tag: "tag"))" == "tag-local")
     #expect("\(Report(state: .noChanges, tag: "tag"))" == "tag")
