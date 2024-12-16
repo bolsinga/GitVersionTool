@@ -10,15 +10,13 @@ import GitLibrary
 
 extension Git {
   func report() async -> Report {
+    var localChanges = true
     do {
-      try await status()
-    } catch {
-      return Report(localChanges: true)
-    }
+      localChanges = !(try await status().isEmpty)
+    } catch {}
 
-    guard let tag = try? await describeTag() else {
-      return Report(localChanges: false)
-    }
-    return Report(localChanges: false, tag: tag)
+    let tag = try? await describeTag()
+
+    return Report(localChanges: localChanges, tag: tag)
   }
 }
