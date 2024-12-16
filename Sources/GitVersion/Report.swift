@@ -7,10 +7,10 @@
 
 import Foundation
 
-public struct Report: CustomStringConvertible {
+struct Report: CustomStringConvertible {
   let localChanges: Bool
 
-  public var description: String {
+  var description: String {
     if localChanges { return "local" }
     return "version"
   }
