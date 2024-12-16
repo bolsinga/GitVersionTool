@@ -7,12 +7,6 @@
 
 import Foundation
 
-enum GitDirectoryState {
-  case notGitDirectory
-  case localChanges
-  case noChanges
-}
-
 enum Report: CustomStringConvertible {
   init(state: GitDirectoryState, name: String?) {
     let nonEmptyName = (name != nil && name!.isEmpty) ? nil : name
