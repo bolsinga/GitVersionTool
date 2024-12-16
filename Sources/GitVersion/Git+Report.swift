@@ -17,6 +17,11 @@ extension Git {
 
     let tag = try? await describeTag()
 
-    return Report(state: state, tag: tag)
+    var branch: String?
+    if tag == nil {
+      branch = try? await branchName()
+    }
+
+    return Report(state: state, tag: tag, branch: branch)
   }
 }

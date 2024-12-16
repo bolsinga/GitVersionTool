@@ -45,7 +45,8 @@ enum Report: CustomStringConvertible {
 }
 
 extension Report {
-  init(state: GitDirectoryState, tag: String? = nil) {
-    self.init(state: state, name: tag)
+  init(state: GitDirectoryState, tag: String? = nil, branch: String? = nil) {
+    let nonEmptyTag = (tag != nil && tag!.isEmpty) ? nil : tag
+    self.init(state: state, name: (nonEmptyTag != nil) ? nonEmptyTag : branch)
   }
 }
