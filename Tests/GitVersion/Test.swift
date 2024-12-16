@@ -11,7 +11,8 @@ import Testing
 @testable import GitVersion
 
 struct Test {
-  @Test func basic() throws {
-    #expect("\(Report())" == "version")
+  @Test func localChanges() throws {
+    #expect("\(Report(localChanges: true))" == "local")
+    #expect("\(Report(localChanges: false))" == "version")
   }
 }

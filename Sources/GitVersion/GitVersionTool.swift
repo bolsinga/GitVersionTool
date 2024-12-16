@@ -34,7 +34,7 @@ public struct GitVersionTool: AsyncParsableCommand {
 
   public func run() async throws {
     let git = Git(directory: gitDirectory)
-    print(git.report)
+    print(await git.report())
   }
 
   public init() {}  // This is public and empty to help the compiler.
