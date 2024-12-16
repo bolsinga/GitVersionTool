@@ -19,8 +19,8 @@ struct Test {
 
   @Test func state_emptyName() throws {
     #expect("\(Report(state: .notGitDirectory, name: ""))" == "unknown")
-    #expect("\(Report(state: .localChanges, name: ""))" == "-local")
-    #expect("\(Report(state: .noChanges, name: ""))" == "")
+    #expect("\(Report(state: .localChanges, name: ""))" == "local")
+    #expect("\(Report(state: .noChanges, name: ""))" == "version")
   }
 
   @Test func state_name() throws {
