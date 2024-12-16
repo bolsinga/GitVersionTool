@@ -11,13 +11,15 @@ import Testing
 @testable import GitVersion
 
 struct Test {
-  @Test func localChanges_noTag() throws {
-    #expect("\(Report(localChanges: true))" == "local")
-    #expect("\(Report(localChanges: false))" == "version")
+  @Test func state_noTag() throws {
+    #expect("\(Report(state: .notGitDirectory))" == "unknown")
+    #expect("\(Report(state: .localChanges))" == "local")
+    #expect("\(Report(state: .noChanges))" == "version")
   }
 
   @Test func localChanges_tag() throws {
-    #expect("\(Report(localChanges: true, tag: "tag"))" == "tag-local")
-    #expect("\(Report(localChanges: false, tag: "tag"))" == "tag")
+    #expect("\(Report(state: .notGitDirectory, tag: "tag"))" == "unknown")
+    #expect("\(Report(state: .localChanges, tag: "tag"))" == "tag-local")
+    #expect("\(Report(state: .noChanges, tag: "tag"))" == "tag")
   }
 }

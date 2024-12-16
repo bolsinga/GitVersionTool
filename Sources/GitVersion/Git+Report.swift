@@ -10,13 +10,13 @@ import GitLibrary
 
 extension Git {
   func report() async -> Report {
-    var localChanges = true
+    var state: Report.State = .notGitDirectory
     do {
-      localChanges = !(try await status().isEmpty)
+      state = try await status().isEmpty ? .noChanges : .localChanges
     } catch {}
 
     let tag = try? await describeTag()
 
-    return Report(localChanges: localChanges, tag: tag)
+    return Report(state: state, tag: tag)
   }
 }
