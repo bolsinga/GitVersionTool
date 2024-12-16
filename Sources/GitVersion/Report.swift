@@ -15,13 +15,14 @@ enum GitDirectoryState {
 
 enum Report: CustomStringConvertible {
   init(state: GitDirectoryState, name: String?) {
+    let nonEmptyName = (name != nil && name!.isEmpty) ? nil : name
     switch state {
     case .notGitDirectory:
       self = .notGit
     case .localChanges:
-      self = .localChanges(name)
+      self = .localChanges(nonEmptyName)
     case .noChanges:
-      self = .noChanges(name)
+      self = .noChanges(nonEmptyName)
     }
   }
 
