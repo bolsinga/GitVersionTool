@@ -14,25 +14,23 @@ enum Report: CustomStringConvertible {
     case .notGitDirectory:
       self = .notGit
     case .localChanges:
-      self = .localChanges(nonEmptyName)
+      let name = (nonEmptyName != nil) ? "\(nonEmptyName!)-local" : "local"
+      self = .localChanges(name)
     case .noChanges:
-      self = .noChanges(nonEmptyName)
+      let name = (nonEmptyName != nil) ? nonEmptyName! : "version"
+      self = .noChanges(name)
     }
   }
 
   case notGit
-  case localChanges(String?)
-  case noChanges(String?)
+  case localChanges(String)
+  case noChanges(String)
 
   var description: String {
     switch self {
     case .notGit:
       return "unknown"
-    case .localChanges(let name):
-      guard let name else { return "local" }
-      return "\(name)-local"
-    case .noChanges(let name):
-      guard let name else { return "version" }
+    case .localChanges(let name), .noChanges(let name):
       return name
     }
   }
