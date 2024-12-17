@@ -9,9 +9,9 @@ import Foundation
 import GitLibrary
 
 extension Report {
-  init(state: RepositoryState, tag: String? = nil, branch: String? = nil) {
+  static func create(state: RepositoryState, tag: String? = nil, branch: String? = nil) -> Report {
     let nonEmptyTag = (tag != nil && tag!.isEmpty) ? nil : tag
-    self.init(state: state, name: (nonEmptyTag != nil) ? nonEmptyTag : branch)
+    return Report(state: state, name: (nonEmptyTag != nil) ? nonEmptyTag : branch)
   }
 }
 
@@ -29,6 +29,6 @@ extension Report {
       branch = try? await git.branchName()
     }
 
-    return Report(state: state, tag: tag, branch: branch)
+    return Report.create(state: state, tag: tag, branch: branch)
   }
 }
