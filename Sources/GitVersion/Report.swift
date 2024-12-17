@@ -8,10 +8,10 @@
 import Foundation
 
 enum Report: CustomStringConvertible {
-  init(state: GitDirectoryState, name: String?) {
+  init(state: RepositoryState, name: String?) {
     let nonEmptyName = (name != nil && name!.isEmpty) ? nil : name?.firstLine
     switch state {
-    case .notGitDirectory:
+    case .invalid:
       self = .notGit
     case .localChanges:
       let name = (nonEmptyName != nil) ? "\(nonEmptyName!)-local" : "local"
