@@ -1,5 +1,5 @@
 //
-//  Test.swift
+//  ReportTest.swift
 //
 //
 //  Created by Greg Bolsinga on 12/15/24.
@@ -10,7 +10,7 @@ import Testing
 
 @testable import GitVersion
 
-struct Test {
+struct ReportTest {
   @Test func state_noName() throws {
     #expect("\(Report(state: .notGitDirectory, name: nil))" == "unknown")
     #expect("\(Report(state: .localChanges, name: nil))" == "local")
