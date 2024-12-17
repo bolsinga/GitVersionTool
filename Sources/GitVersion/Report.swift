@@ -7,6 +7,8 @@
 
 import Foundation
 
+private let Local = "local"
+
 enum Report: CustomStringConvertible {
   init(state: RepositoryState, name: String?) {
     let nonEmptyName = (name != nil && name!.isEmpty) ? nil : name?.firstLine
@@ -14,7 +16,7 @@ enum Report: CustomStringConvertible {
     case .invalid:
       self = .notGit
     case .localChanges:
-      let name = (nonEmptyName != nil) ? "\(nonEmptyName!)-local" : "local"
+      let name = (nonEmptyName != nil) ? nonEmptyName! : Local
       self = .localChanges(name)
     case .noChanges:
       let name = (nonEmptyName != nil) ? nonEmptyName! : "version"
@@ -30,7 +32,12 @@ enum Report: CustomStringConvertible {
     switch self {
     case .notGit:
       return "unknown"
-    case .localChanges(let name), .noChanges(let name):
+    case .localChanges(let name):
+      if name == Local {
+        return name
+      }
+      return "\(name)-\(Local)"
+    case .noChanges(let name):
       return name
     }
   }
