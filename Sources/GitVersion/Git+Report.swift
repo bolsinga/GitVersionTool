@@ -8,6 +8,13 @@
 import Foundation
 import GitLibrary
 
+extension Report {
+  init(state: GitDirectoryState, tag: String? = nil, branch: String? = nil) {
+    let nonEmptyTag = (tag != nil && tag!.isEmpty) ? nil : tag
+    self.init(state: state, name: (nonEmptyTag != nil) ? nonEmptyTag : branch)
+  }
+}
+
 extension Git {
   func report() async -> Report {
     var state: GitDirectoryState = .notGitDirectory
