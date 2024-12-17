@@ -12,19 +12,19 @@ import Testing
 
 struct ReportTest {
   @Test func state_noName() throws {
-    #expect("\(Report(state: .notGitDirectory, name: nil))" == "unknown")
+    #expect("\(Report(state: .invalid, name: nil))" == "unknown")
     #expect("\(Report(state: .localChanges, name: nil))" == "local")
     #expect("\(Report(state: .noChanges, name: nil))" == "version")
   }
 
   @Test func state_emptyName() throws {
-    #expect("\(Report(state: .notGitDirectory, name: ""))" == "unknown")
+    #expect("\(Report(state: .invalid, name: ""))" == "unknown")
     #expect("\(Report(state: .localChanges, name: ""))" == "local")
     #expect("\(Report(state: .noChanges, name: ""))" == "version")
   }
 
   @Test func state_name() throws {
-    #expect("\(Report(state: .notGitDirectory, name: "name"))" == "unknown")
+    #expect("\(Report(state: .invalid, name: "name"))" == "unknown")
     #expect("\(Report(state: .localChanges, name: "name"))" == "name-local")
     #expect("\(Report(state: .noChanges, name: "name"))" == "name")
   }

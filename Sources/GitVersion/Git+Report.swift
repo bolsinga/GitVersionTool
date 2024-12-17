@@ -9,7 +9,7 @@ import Foundation
 import GitLibrary
 
 extension Report {
-  init(state: GitDirectoryState, tag: String? = nil, branch: String? = nil) {
+  init(state: RepositoryState, tag: String? = nil, branch: String? = nil) {
     let nonEmptyTag = (tag != nil && tag!.isEmpty) ? nil : tag
     self.init(state: state, name: (nonEmptyTag != nil) ? nonEmptyTag : branch)
   }
@@ -17,7 +17,7 @@ extension Report {
 
 extension Git {
   func report() async -> Report {
-    var state: GitDirectoryState = .notGitDirectory
+    var state: RepositoryState = .invalid
     do {
       state = try await status().isEmpty ? .noChanges : .localChanges
     } catch {}
