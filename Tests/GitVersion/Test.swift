@@ -29,6 +29,10 @@ struct Test {
     #expect("\(Report(state: .noChanges, name: "name"))" == "name")
   }
 
+  @Test func state_funkyName() throws {
+    #expect("\(Report(state: .noChanges, name: "name\ntwo"))" == "name")
+  }
+
   @Test func state_tag() throws {
     #expect("\(Report(state: .noChanges, tag: "name"))" == "name")
   }
