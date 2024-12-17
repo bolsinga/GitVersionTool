@@ -33,7 +33,12 @@ public struct GitVersionTool: AsyncParsableCommand {
   var gitDirectory: URL
 
   public func run() async throws {
-    let git = Git(directory: gitDirectory)
+    #if DEBUG
+      let suppressStandardErr = false
+    #else
+      let suppressStandarErr = true
+    #endif
+    let git = Git(directory: gitDirectory, suppressStandardErr: suppressStandardErr)
     print(await git.report())
   }
 

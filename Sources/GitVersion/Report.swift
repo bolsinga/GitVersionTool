@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 enum Report: CustomStringConvertible {
   init(state: GitDirectoryState, name: String?) {
     let nonEmptyName = (name != nil && name!.isEmpty) ? nil : name?.firstLine
