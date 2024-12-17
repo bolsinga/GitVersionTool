@@ -39,7 +39,7 @@ public struct GitVersionTool: AsyncParsableCommand {
       let suppressStandarErr = true
     #endif
     let git = Git(directory: gitDirectory, suppressStandardErr: suppressStandardErr)
-    print(await git.report())
+    print(await Report.create(from: git))
   }
 
   public init() {}  // This is public and empty to help the compiler.
