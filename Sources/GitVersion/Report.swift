@@ -10,17 +10,17 @@ import Foundation
 private let Local = "local"
 
 enum Report: CustomStringConvertible {
-  init(state: RepositoryState, name: String?) {
+  init?(state: RepositoryState, name: String?) {
     let nonEmptyName = (name != nil && name!.isEmpty) ? nil : name?.firstLine
     switch state {
     case .invalid:
       self = .notGit
     case .localChanges:
-      let name = (nonEmptyName != nil) ? nonEmptyName! : Local
-      self = .localChanges(name)
+      guard let nonEmptyName else { return nil }
+      self = .localChanges(nonEmptyName)
     case .noChanges:
-      let name = (nonEmptyName != nil) ? nonEmptyName! : "version"
-      self = .noChanges(name)
+      guard let nonEmptyName else { return nil }
+      self = .noChanges(nonEmptyName)
     }
   }
 

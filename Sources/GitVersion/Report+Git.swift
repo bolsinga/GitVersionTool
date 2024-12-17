@@ -9,14 +9,18 @@ import Foundation
 import GitLibrary
 
 extension Report {
-  static func create(state: RepositoryState, tag: String? = nil, branch: String? = nil) -> Report {
+  static func create(state: RepositoryState, tag: String? = nil, branch: String? = nil) -> Report? {
     let nonEmptyTag = (tag != nil && tag!.isEmpty) ? nil : tag
-    return Report(state: state, name: (nonEmptyTag != nil) ? nonEmptyTag : branch)
+    guard let report = Report(state: state, name: (nonEmptyTag != nil) ? nonEmptyTag : branch)
+    else {
+      return nil
+    }
+    return report
   }
 }
 
 extension Report {
-  static func create(from git: Git) async -> Report {
+  static func create(from git: Git) async -> Report? {
     var state: RepositoryState = .invalid
     do {
       state = try await git.status().isEmpty ? .noChanges : .localChanges
