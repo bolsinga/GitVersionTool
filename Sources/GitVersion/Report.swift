@@ -7,11 +7,6 @@
 
 import Foundation
 
-extension String {
-  fileprivate var firstLine: String {
-    components(separatedBy: "\n")[0]
-  }
-}
 
 enum Report: CustomStringConvertible {
   init(state: GitDirectoryState, name: String?) {
