@@ -9,7 +9,7 @@ import Foundation
 import GitLibrary
 
 extension Report {
-  fileprivate init(state: GitDirectoryState, tag: String? = nil, branch: String? = nil) {
+  init(state: GitDirectoryState, tag: String? = nil, branch: String? = nil) {
     let nonEmptyTag = (tag != nil && tag!.isEmpty) ? nil : tag
     self.init(state: state, name: (nonEmptyTag != nil) ? nonEmptyTag : branch)
   }
