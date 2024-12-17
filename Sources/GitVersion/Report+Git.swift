@@ -1,5 +1,5 @@
 //
-//  Git+Report.swift
+//  Report+Git.swift
 //  GitVersion
 //
 //  Created by Greg Bolsinga on 12/15/24.
@@ -15,18 +15,18 @@ extension Report {
   }
 }
 
-extension Git {
-  func report() async -> Report {
+extension Report {
+  static func create(from git: Git) async -> Report {
     var state: RepositoryState = .invalid
     do {
-      state = try await status().isEmpty ? .noChanges : .localChanges
+      state = try await git.status().isEmpty ? .noChanges : .localChanges
     } catch {}
 
-    let tag = try? await describeTag()
+    let tag = try? await git.describeTag()
 
     var branch: String?
     if tag == nil {
-      branch = try? await branchName()
+      branch = try? await git.branchName()
     }
 
     return Report(state: state, tag: tag, branch: branch)
