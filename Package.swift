@@ -8,7 +8,7 @@ let package = Package(
   products: [.executable(name: "GitVersion", targets: ["GitVersion"])],
   dependencies: [
     .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
-    .package(url: "https://github.com/bolsinga/GitLibrary", branch: "main"),
+    .package(url: "https://github.com/bolsinga/GitLibrary", from: "1.1.0"),
   ],
   targets: [
     .executableTarget(
