@@ -9,7 +9,10 @@ extension Reportable {
   func name() async -> String? {
     guard let name = await tag(), !name.isEmpty else {
       guard let name = await branch(), !name.isEmpty else {
-        return nil
+        guard let name = await commit(), !name.isEmpty else {
+          return nil
+        }
+        return name
       }
       return name
     }

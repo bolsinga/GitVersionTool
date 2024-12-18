@@ -10,27 +10,34 @@ import Testing
 
 @testable import GitVersion
 
+let commit = "--commit--"
+
 struct TestReportable: Reportable {
   let state: RepositoryState
   let tag: String?
   let branch: String?
+  let commit: String
 
-  internal init(state: RepositoryState, tag: String? = nil, branch: String? = nil) {
+  internal init(state: RepositoryState, tag: String? = nil, branch: String? = nil, commit: String) {
     self.state = state
     self.tag = tag
     self.branch = branch
+    self.commit = commit
   }
 
   func state() async -> RepositoryState { state }
   func tag() async -> String? { tag }
   func branch() async -> String? { branch }
+  func commit() async -> String? { commit }
 }
 
 extension Report {
-  static func create(state: RepositoryState, tag: String? = nil, branch: String? = nil) async
+  static func create(
+    state: RepositoryState, tag: String? = nil, branch: String? = nil, commit: String = commit
+  ) async
     -> Report?
   {
-    await create(from: TestReportable(state: state, tag: tag, branch: branch))
+    await create(from: TestReportable(state: state, tag: tag, branch: branch, commit: commit))
   }
 }
 
@@ -55,7 +62,15 @@ struct ReportGitTest {
     #expect(
       try #require(await Report.create(state: .noChanges, tag: "tag", branch: "")).description
         == "tag")
-    #expect(await Report.create(state: .noChanges, tag: nil, branch: "") == nil)
-    #expect(await Report.create(state: .noChanges, tag: "", branch: "") == nil)
+    #expect(
+      try #require(await Report.create(state: .noChanges, tag: nil, branch: "")).description
+        == commit)
+    #expect(
+      try #require(await Report.create(state: .noChanges, tag: "", branch: "")).description
+        == commit)
+  }
+
+  @Test func commitFallbackEmpty() async throws {
+    #expect(await Report.create(state: .noChanges, commit: "") == nil)
   }
 }

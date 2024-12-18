@@ -11,4 +11,5 @@ protocol Reportable {
   func state() async -> RepositoryState
   func tag() async -> String?
   func branch() async -> String?
+  func commit() async -> String?
 }
