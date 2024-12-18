@@ -24,4 +24,8 @@ extension Git: Reportable {
   func branch() async -> String? {
     try? await branchName()
   }
+
+  func commit() async -> String? {
+    try? await mostRecentHash()
+  }
 }
