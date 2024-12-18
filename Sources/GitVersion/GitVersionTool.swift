@@ -32,6 +32,10 @@ public struct GitVersionTool: AsyncParsableCommand {
   )
   var gitDirectory: URL
 
+  /// Optional variableName to use for swift code.
+  @Option(help: "The variable name to use to generate Swift source code.")
+  var variable: String?
+
   public func run() async throws {
     #if DEBUG
       let suppressStandardErr = false
@@ -39,11 +43,7 @@ public struct GitVersionTool: AsyncParsableCommand {
       let suppressStandarErr = true
     #endif
     let git = Git(directory: gitDirectory, suppressStandardErr: suppressStandardErr)
-    guard let report = await Report.create(from: git) else {
-      print("#error")
-      return
-    }
-    print(report)
+    print(await Report.emit(reportable: git, variable: variable))
   }
 
   public init() {}  // This is public and empty to help the compiler.
