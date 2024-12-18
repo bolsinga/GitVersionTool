@@ -10,6 +10,30 @@ import Testing
 
 @testable import GitVersion
 
+struct TestReportable: Reportable {
+  let state: RepositoryState
+  let tag: String?
+  let branch: String?
+
+  internal init(state: RepositoryState, tag: String? = nil, branch: String? = nil) {
+    self.state = state
+    self.tag = tag
+    self.branch = branch
+  }
+
+  func state() async -> RepositoryState { state }
+  func tag() async -> String? { tag }
+  func branch() async -> String? { branch }
+}
+
+extension Report {
+  static func create(state: RepositoryState, tag: String? = nil, branch: String? = nil) async
+    -> Report?
+  {
+    await create(from: TestReportable(state: state, tag: tag, branch: branch))
+  }
+}
+
 struct ReportGitTest {
   @Test func state_tag() async throws {
     #expect(try #require(await Report.create(state: .noChanges, tag: "name")).description == "name")
