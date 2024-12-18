@@ -9,9 +9,11 @@ import Foundation
 import GitLibrary
 
 extension Report {
-  static func create(state: RepositoryState, tag: String? = nil, branch: String? = nil) -> Report? {
+  static func create(state: RepositoryState, tag: String? = nil, branch: String? = nil) async
+    -> Report?
+  {
     let nonEmptyTag = (tag != nil && tag!.isEmpty) ? nil : tag
-    guard let report = Report(state: state, name: (nonEmptyTag != nil) ? nonEmptyTag : branch)
+    guard let report = await Report(state: state, name: (nonEmptyTag != nil) ? nonEmptyTag : branch)
     else {
       return nil
     }
@@ -33,6 +35,6 @@ extension Report {
       branch = try? await git.branchName()
     }
 
-    return Report.create(state: state, tag: tag, branch: branch)
+    return await Report.create(state: state, tag: tag, branch: branch)
   }
 }
