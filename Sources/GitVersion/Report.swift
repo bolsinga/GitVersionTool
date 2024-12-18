@@ -19,7 +19,7 @@ enum Report: CustomStringConvertible {
     }
     switch state {
     case .invalid:
-      self = .notGit
+      return nil
     case .localChanges:
       guard let name = await getName() else { return nil }
       self = .localChanges(name)
@@ -29,14 +29,11 @@ enum Report: CustomStringConvertible {
     }
   }
 
-  case notGit
   case localChanges(String)
   case noChanges(String)
 
   var description: String {
     switch self {
-    case .notGit:
-      return "unknown"
     case .localChanges(let name):
       return "\(name)-local"
     case .noChanges(let name):
