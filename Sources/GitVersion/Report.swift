@@ -7,8 +7,6 @@
 
 import Foundation
 
-private let Local = "local"
-
 enum Report: CustomStringConvertible {
   init?(state: RepositoryState, name: String?) async {
     await self.init(state: state, namer: { name })
@@ -40,10 +38,7 @@ enum Report: CustomStringConvertible {
     case .notGit:
       return "unknown"
     case .localChanges(let name):
-      if name == Local {
-        return name
-      }
-      return "\(name)-\(Local)"
+      return "\(name)-local"
     case .noChanges(let name):
       return name
     }
