@@ -11,10 +11,10 @@ let SourceCodeError = "#error"
 
 extension String {
   func sourceCode(value: String) -> String {
-    "let \(self) = \"\(value)\""
+    "public let \(self) = \"\(value)\""
   }
 
   var errorSourceCode: String {
-    "let \(self) = \(SourceCodeError)"
+    "public let \(self) = \(SourceCodeError)"
   }
 }

@@ -30,7 +30,7 @@ struct ReportEmitTest {
       await Report.emit(reportable: EmitTestReportable(state: .invalid), variable: nil) == "#error")
     #expect(
       await Report.emit(reportable: EmitTestReportable(state: .invalid), variable: "variable")
-        == "let variable = #error")
+        == "public let variable = #error")
     #expect(
       await Report.emit(reportable: EmitTestReportable(state: .noChanges), variable: nil)
         == "#error")
@@ -40,6 +40,6 @@ struct ReportEmitTest {
     #expect(
       await Report.emit(
         reportable: EmitTestReportable(state: .noChanges, tag: "name"), variable: "variable")
-        == "let variable = \"name\"")
+        == "public let variable = \"name\"")
   }
 }
