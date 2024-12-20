@@ -17,7 +17,7 @@ public struct GitVersionTool: AsyncParsableCommand {
     version: "1.0.0"
   )
 
-  /// Git Directory for output file.
+  /// Git Directory to examine for version.
   @Option(
     help: "The path at which return a git version.",
     transform: ({
@@ -32,6 +32,22 @@ public struct GitVersionTool: AsyncParsableCommand {
   )
   var gitDirectory: URL
 
+  /// File to write version to.
+  @Option(
+    help: "The file to write to.",
+    transform: ({
+      let url = URL(filePath: $0)
+      let manager = FileManager.default
+      let directory = url.deletingLastPathComponent()
+      if !manager.fileExists(atPath: directory.path()) {
+        try manager.createDirectory(at: directory, withIntermediateDirectories: true)
+      }
+
+      return url
+    })
+  )
+  var output: URL?
+
   /// Optional variableName to use for swift code.
   @Option(help: "The variable name to use to generate Swift source code.")
   var variable: String?
@@ -43,7 +59,14 @@ public struct GitVersionTool: AsyncParsableCommand {
       let suppressStandarErr = true
     #endif
     let git = Git(directory: gitDirectory, suppressStandardErr: suppressStandardErr)
-    print(await Report.emit(reportable: git, variable: variable))
+
+    let version = await Report.emit(reportable: git, variable: variable)
+
+    if let output {
+      try version.write(to: output, atomically: true, encoding: .utf8)
+    } else {
+      print(version)
+    }
   }
 
   public init() {}  // This is public and empty to help the compiler.
