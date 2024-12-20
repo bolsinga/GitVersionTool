@@ -63,7 +63,7 @@ public struct GitVersionTool: AsyncParsableCommand {
     let version = await Report.emit(reportable: git, variable: variable)
 
     if let output {
-      try version.write(to: output, atomically: true, encoding: .utf8)
+      try "\(version)\n".write(to: output, atomically: true, encoding: .utf8)
     } else {
       print(version)
     }
