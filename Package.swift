@@ -24,5 +24,6 @@ let package = Package(
     ),
     .target(name: "GitVersion"),
     .testTarget(name: "GitVersionTests", dependencies: ["GitVersion"]),
+    .plugin(name: "GitVersionCommand", capability: .buildTool(), dependencies: ["Tool"])
   ]
 )
