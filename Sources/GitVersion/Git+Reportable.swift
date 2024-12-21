@@ -9,7 +9,7 @@ import Foundation
 import GitLibrary
 
 extension Git: Reportable {
-  func state() async -> RepositoryState {
+  public func state() async -> RepositoryState {
     do {
       return try await status().isEmpty ? .noChanges : .localChanges
     } catch {
@@ -17,15 +17,15 @@ extension Git: Reportable {
     }
   }
 
-  func tag() async -> String? {
+  public func tag() async -> String? {
     try? await describeTag()
   }
 
-  func branch() async -> String? {
+  public func branch() async -> String? {
     try? await branchName()
   }
 
-  func commit() async -> String? {
+  public func commit() async -> String? {
     try? await mostRecentHash()
   }
 }

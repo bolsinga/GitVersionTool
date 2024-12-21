@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Report: CustomStringConvertible {
+public enum Report: CustomStringConvertible {
   init?(state: RepositoryState, name: String?) async {
     await self.init(state: state, namer: { name })
   }
@@ -32,7 +32,7 @@ enum Report: CustomStringConvertible {
   case localChanges(String)
   case noChanges(String)
 
-  var description: String {
+  public var description: String {
     switch self {
     case .localChanges(let name):
       return "\(name)-local"

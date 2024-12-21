@@ -5,17 +5,26 @@ import PackageDescription
 let package = Package(
   name: "GitVersion",
   platforms: [.macOS(.v15)],
-  products: [.executable(name: "GitVersion", targets: ["GitVersion"])],
+  products: [
+    .library(name: "GitVersion", targets: ["GitVersion"]),
+    .executable(name: "Tool", targets: ["Tool"]),
+  ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
     .package(url: "https://github.com/bolsinga/GitLibrary", from: "1.1.0"),
   ],
   targets: [
     .executableTarget(
-      name: "GitVersion",
+      name: "Tool",
       dependencies: [
         .product(name: "ArgumentParser", package: "swift-argument-parser"),
-        .product(name: "GitLibrary", package: "GitLibrary"),
+        .byName(name: "GitVersion"),
+      ]
+    ),
+    .target(
+      name: "GitVersion",
+      dependencies: [
+        .product(name: "GitLibrary", package: "GitLibrary")
       ]
     ),
     .testTarget(name: "GitVersionTests", dependencies: ["GitVersion"]),

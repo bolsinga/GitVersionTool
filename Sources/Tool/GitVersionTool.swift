@@ -8,6 +8,7 @@
 import ArgumentParser
 import Foundation
 import GitLibrary
+import GitVersion
 
 @main
 public struct GitVersionTool: AsyncParsableCommand {
