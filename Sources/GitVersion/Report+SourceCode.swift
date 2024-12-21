@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import GitLibrary
 
 extension Report {
   public static func emit<T: Reportable>(reportable: T, variable: String?) async -> String {
