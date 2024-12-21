@@ -7,6 +7,7 @@
 
 import Foundation
 import GitLibrary
+import GitVersion
 
 extension Git: Reportable {
   public func state() async -> RepositoryState {

@@ -18,15 +18,11 @@ let package = Package(
       name: "Tool",
       dependencies: [
         .product(name: "ArgumentParser", package: "swift-argument-parser"),
+        .product(name: "GitLibrary", package: "GitLibrary"),
         .byName(name: "GitVersion"),
       ]
     ),
-    .target(
-      name: "GitVersion",
-      dependencies: [
-        .product(name: "GitLibrary", package: "GitLibrary")
-      ]
-    ),
+    .target(name: "GitVersion"),
     .testTarget(name: "GitVersionTests", dependencies: ["GitVersion"]),
   ]
 )
