@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Reportable {
+public protocol Reportable {
   func state() async -> RepositoryState
   func tag() async -> String?
   func branch() async -> String?

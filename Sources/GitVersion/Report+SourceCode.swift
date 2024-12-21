@@ -9,7 +9,7 @@ import Foundation
 import GitLibrary
 
 extension Report {
-  static func emit<T: Reportable>(reportable: T, variable: String?) async -> String {
+  public static func emit<T: Reportable>(reportable: T, variable: String?) async -> String {
     if let report = await Self.create(from: reportable) {
       if let variable {
         return variable.sourceCode(value: report.description)
